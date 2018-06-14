@@ -1,0 +1,71 @@
+post {
+        success {
+            script {
+                def payload = """
+{
+
+    "@type": "MessageCard",
+
+    "@context": "http://schema.org/extensions",
+
+    "themeColor": "0076D7",
+
+    "summary": "Oozie co-ordinators have been scheduled",
+
+    "sections": [{
+
+        "activityTitle": "Oozie co-ordinators have been scheduled",
+
+        "activitySubtitle": "",
+
+        "activityImage": "https://cwiki.apache.org/confluence/download/attachments/30737784/oozie_47x200.png?version=1&modificationDate=1349284899000&api=v29",
+
+        "facts": [{
+
+            "name": "COORDINATOR_START",
+
+            "value": "${params.COORDINATOR_START}"
+
+        }, {
+
+            "name": "COORDINATOR_END",
+
+            "value": "${params.COORDINATOR_END}"
+
+        }],
+
+        "markdown": true
+
+    }],
+
+    "potentialAction": [{
+
+        "@type": "OpenUri",
+
+        "name": "View Build",
+
+        "targets": [
+
+            { "os": "default", "uri": "${BUILD_URL}" }
+
+        ]
+
+    }]
+
+}"""
+
+                httpRequest httpMode: 'POST',
+
+                        acceptType: 'APPLICATION_JSON',
+
+                        contentType: 'APPLICATION_JSON',
+
+                        url: "${teamsWebhookUrl}",
+
+                        requestBody: payload
+
+            }
+
+        }
+
+    }
